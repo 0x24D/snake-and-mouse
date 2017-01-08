@@ -1,1 +1,1 @@
-# snake-and-mouse
+Basic version of snake and mouse console game
