@@ -1,27 +1,27 @@
 // Underground.cpp: implementation of the Underground class 
 //////////////////////////////////////////////////////////////////////
-
 #include "Underground.h"
-
 //////////////////////////////////////////////////////////////////////
-Underground::Underground() : hole1_(HOLE, 4, 3), hole2_(HOLE, 15, 10), hole3_(HOLE, 7, 15) {}
-Hole Underground::getHoleNo(const int& no) const {
-	assert(isValidHoleNumber(no));	//precondition: valid hole number
-	switch (no) {
-	case 1: return hole1_; break;
-	case 2: return hole2_; break;
-	case 3: return hole3_;
-	}
-}
-bool Underground::isValidHoleNumber(const int& no) const {
-	return (no >= 1) && (no <= 3); 
-}
-int Underground::findHoleNumberAtPosition(const int& x, const int& y)  const{
-	for (int hNo(1); hNo <= 3; ++hNo)
-		if (getHoleNo(hNo).isAtPosition(x, y))
-			return hNo;		//number of the hole
-	return 0;	
+Underground::Underground() : hole1_(4, 3), hole2_(15, 10), hole3_(7, 15) {}
+bool Underground::findHoleAtPosition(const int& x, const int& y)  const {
+	if ((hole1_.getX() == x && hole1_.getY() == y) || (hole2_.getX() == x && hole2_.getY() == y) || (hole3_.getX() == x && hole3_.getY() == y))
+		return true;
+	return false;
 }
 char Underground::getHoleSymbol() const{
-	return HOLE;
+	return hole1_.getSymbol();
+}
+void Underground::getExitHolePosition(const int& n, int& x, int& y) const {
+	if (n == 1){
+		x = hole1_.getX();
+		y = hole1_.getY();
+	}
+	else if (n == 2){
+		x = hole2_.getX();
+		y = hole2_.getY();
+	}
+	else if (n == 3){
+		x = hole3_.getX();
+		y = hole3_.getY();
+	}
 }

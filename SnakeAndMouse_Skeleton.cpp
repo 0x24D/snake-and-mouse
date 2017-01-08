@@ -10,12 +10,14 @@ using namespace std;
 #include "Underground.h"
 #include "Interface.h"
 #include "SnakeAndMouseGame.h"
+#include "Player.h"
 //using OO approach
 //---------------------------------
 int main()
 {
 	SnakeAndMouseGame game;
-	game.setUp();
+	Player p;
+	game.setPlayer(&p);
 	game.run();
 	Interface::holdWindow();
 	return 0;

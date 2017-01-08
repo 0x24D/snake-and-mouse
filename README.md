@@ -1,1 +1,1 @@
-Basic version of snake and mouse console game
+Extended version of snake and mouse console game

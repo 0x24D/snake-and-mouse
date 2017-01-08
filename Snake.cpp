@@ -2,18 +2,16 @@
 ////////////////////////////////////////////////////////////////////// 
 //////////////////////////////////////////////////////////////////////
 #include "Snake.h"
-Snake::Snake() : MoveableGridItem(SNAKEHEAD, srng_.getRandomValue(SIZE), srng_.getRandomValue(SIZE)) {
-	p_mouse_ = nullptr;
+Snake::Snake() : MoveableGridItem(SNAKEHEAD, GRIDSIZE/2, GRIDSIZE/2), p_mouse_(nullptr), stuck_(false) {
 	for (int i = 0; i < 3; i++){
-		tail.push_back(Tail(getX(), getY()));
+		tail_.push_back(Tail(getX(), getY()));
 	}
 }
-bool Snake::hasCaughtMouse()const {
+bool Snake::hasCaughtMouse() const{
 	assert(p_mouse_ != 0);  //Pre-condition: The snake needs to know where the mouse is 
 	return isAtPosition(p_mouse_->getX(), p_mouse_->getY());
 }
-void Snake::spotMouse(Mouse* p_mouse)
-{
+void Snake::spotMouse(Mouse* p_mouse){
 	p_mouse_ = p_mouse;
 }
 void Snake::chaseMouse(){	 
@@ -23,10 +21,10 @@ void Snake::chaseMouse(){
 	//go in that direction
 	moveTail();
 	updatePosition(snakeDX, snakeDY);
-	
+	if (getTailPosition(getX(), getY()))
+		stuck_ = true;
 }
-void Snake::setDirection(int& dx, int& dy) const
-{
+void Snake::setDirection(int& dx, int& dy) const{
 	assert(p_mouse_ != 0);  //Pre-condition: The snake needs to know where the mouse is 
 	//assume snake only move when necessary
 	dx = 0; dy = 0;
@@ -42,33 +40,45 @@ void Snake::setDirection(int& dx, int& dy) const
 		if (getY() > p_mouse_->getY())         //if snake is below mouse
 			dy = -1;                     //snake should move up
 }
-void Snake::moveTail()
-{
-	for (unsigned int i = tail.size() - 1; i > 0; i--)
+void Snake::moveTail(){
+	for (unsigned int i = tail_.size() - 1; i > 0; i--)
 	{
-		tail[i].resetPosition(tail[i - 1].getX(), tail[i - 1].getY());
+		tail_[i].resetPosition(tail_[i - 1].getX(), tail_[i - 1].getY());
 	}
-	tail[0].resetPosition(getX(), getY());
+	tail_[0].resetPosition(getX(), getY());
 }
-char Snake::getTailSymbol() const
-{
-	for (unsigned int i = 0; i < tail.size(); i++)
+char Snake::getTailSymbol() const{
+	for (unsigned int i = 0; i < tail_.size(); i++)
 	{
-		return tail[i].getSymbol();
+		return tail_[i].getSymbol();
 	}
 }
 bool Snake::getTailPosition(const int& x, const int& y) const{
-	for (unsigned int i = 0; i < tail.size(); i++)
+	for (unsigned int i = 0; i < tail_.size(); i++)
 	{
-		if ((tail[i].getX() == x) && (tail[i].getY() == y))
+		if ((tail_[i].getX() == x) && (tail_[i].getY() == y))
 			return true;
 	}
 	return false;
 }
-const RandomNumberGenerator Snake::srng_;
-RandomNumberGenerator Snake::getRNG() const{return srng_;}
+void Snake::saveTailPosition(const int& n, int& x, int& y) const{
+	x = tail_[n].getX();
+	y = tail_[n].getY();
+}
+void Snake::loadTailPosition(const int& n, int& x, int& y) const{
+	x = tail_[n].getX();
+	y = tail_[n].getY();
+}
 void Snake::reset(){
-	resetPosition(srng_.getRandomValue(SIZE), srng_.getRandomValue(SIZE));
-	for (int i = 0; i < tail.size(); i++)
-		tail[i].resetPosition(getX(), getY());
+	stuck_ = false;
+	resetPosition(GRIDSIZE/2, GRIDSIZE/2);
+	for (unsigned int i = 0; i < tail_.size(); i++){
+		tail_[i].resetPosition(getX(), getY());
+	}
+}
+bool Snake::isStuck() const{
+	if (stuck_)
+		return true;
+	else
+		return false;
 }

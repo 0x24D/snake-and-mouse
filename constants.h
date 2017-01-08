@@ -1,5 +1,11 @@
 // constants.h: list of constants used in the system 
 //////////////////////////////////////////////////////////////////////
+//---------------------------------------------------------------------
+// Date       Programmer    Amendments made and justification (if needed)
+//---------------------------------------------------------------------
+// 
+//
+//---------------------------------------------------------------------
 #if !defined(constantsH)
 #define constantsH 
 
@@ -7,8 +13,8 @@
 //________________________________________________
 //define constants
 
-//defining the size of the grid
-#define SIZE      (20)	//grid dimension
+//defining the GRIDSIZE of the grid
+#define GRIDSIZE      (20)	//grid dimension -- had to rename due to <Windows.h> having a variable called SIZE
 
 //defining symbols used for display of the grid and grid items
 #define SNAKEHEAD ('S')	//snake symbol

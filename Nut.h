@@ -5,7 +5,7 @@
 class Nut : public MoveableGridItem {
 public:
 	//constructor
-	Nut::Nut();
+	Nut(int x, int y);
 	//assessors
 	bool hasBeenCollected() const;
 	void disappear();

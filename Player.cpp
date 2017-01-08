@@ -1,6 +1,6 @@
 
 #include "Player.h"
-Player::Player(): name_(Interface::getUserName()){}
+Player::Player() : name_(Interface::welcomeMessage()){}
 string Player::getName() const{
 	return name_;
 }

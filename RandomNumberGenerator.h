@@ -1,4 +1,6 @@
 // RandomNumberGenerator.h: interface for the RandomNumberGenerator class
+//////////////////////////////////////////////////////////////////////
+
 #if !defined(RandomNumberGeneratorH)
 #define RandomNumberGeneratorH
 

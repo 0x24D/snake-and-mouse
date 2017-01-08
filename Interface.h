@@ -12,6 +12,7 @@
 #include <iostream>		//for output and input: cout << and cin >>
 #include <string>		//for string
 #include <conio.h>		//for _getch() -- moved from .cpp file
+#include <Windows.h>	//for colour
 using namespace std;
 class Interface{
 	public:
@@ -19,6 +20,6 @@ class Interface{
 		static void drawGridOnScreen(const string& gridData);
 		static void showResultsOnScreen(const string& message);
 		static void holdWindow();
-		static string getUserName();
+		static string welcomeMessage();
 };
 #endif // !defined(InterfaceH)
